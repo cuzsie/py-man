@@ -1,4 +1,4 @@
-# PYMAN
+# PY-MAN
 
 A recreation of Hangman in Python.
 
