@@ -117,6 +117,8 @@ def show_rules():
         "Your goal is to guess the word.\n"
         "Every time you guess a wrong letter, the man gets hung.\n"
         "6 wrong letters and you lose!\n\n"
+        "Type 'hint' at any time for a hint.\n"
+        "Typing your answer in quotes (\"\") will count as a word guess.\n"
         "Press enter to exit\n\n"
         "|-------\n"
         "|      |\n"
@@ -191,6 +193,14 @@ def play(word):
 
             reload_board()
             continue
+
+        if typedChar.startswith("\""):
+            typedChar = typedChar.strip("\"")
+
+            if typedChar == current_word:
+                reveal()
+                reload_board()
+                win()
 
         typedChar = typedChar[0] # Use first character only
 
@@ -326,12 +336,15 @@ def win():
 def lose():
     global word_def
 
-    for i in range(len(unlock_progress)):
-        unlock_progress[i] = 1
-
+    reveal()
     reload_board()
+
     print(f"The man has been hung! The {word_def} was '{current_word}'.")
     end()
+
+def reveal():
+    for i in range(len(unlock_progress)):
+        unlock_progress[i] = 1
 
 def parse_text(text):
     if str(text).lower() == "kill":
